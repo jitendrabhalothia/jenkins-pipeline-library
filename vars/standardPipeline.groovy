@@ -20,7 +20,7 @@ def call(body) {
             }
 
             stages {
-                stage ('dev05-rabbitmq'') {
+                stage ('dev05-rabbitmq') {
                     when {
                         // Only say hello if a "rabbitmq" is requested
                         expression { params.REQUESTED_ACTION == 'rabbitmq'  || params.REQUESTED_ACTION == 'all'}
@@ -32,7 +32,7 @@ def call(body) {
 
                     }
                 }
-                stage ('dev05-redis'') {
+                stage ('dev05-redis') {
                     when {
                         // Only say hello if a "rabbitmq" is requested
                         expression { params.REQUESTED_ACTION == 'redis'  || params.REQUESTED_ACTION == 'all'}
@@ -41,6 +41,18 @@ def call(body) {
                         echo 'Depoying rabbitmq for dev05'
                 
                         sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/redis.yml --tags update --vault-password-file  ~/.agv"
+
+                    }
+                }
+                stage ('dev05-droms') {
+                    when {
+                        // Only say hello if a "rabbitmq" is requested
+                        expression { params.REQUESTED_ACTION == 'droms'  || params.REQUESTED_ACTION == 'all'}
+                    }
+                    steps {
+                        echo 'Depoying rabbitmq for dev05'
+                
+                        sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/droms.yml --tags update --vault-password-file  ~/.agv"
 
                     }
                 }
