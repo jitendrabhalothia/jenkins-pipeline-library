@@ -5,6 +5,13 @@ def call(body) {
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = config
         body()
+        parameters {
+                choice(
+                    // choices are a string of newline separated values
+                    choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
+                    description: '',
+                    name: 'REQUESTED_ACTION')
+        }
 
         pipeline {
             agent {
@@ -34,7 +41,7 @@ def call(body) {
                 }
                 stage ('dev05-redis') {
                     when {
-                        // Only say hello if a "rabbitmq" is requested
+                        // Only say hello if a "redis is requested
                         expression { params.REQUESTED_ACTION == 'redis'  || params.REQUESTED_ACTION == 'all'}
                     }
                     steps {
@@ -46,7 +53,7 @@ def call(body) {
                 }
                 stage ('dev05-droms') {
                     when {
-                        // Only say hello if a "rabbitmq" is requested
+                        // Only say hello if a "droms" is requested
                         expression { params.REQUESTED_ACTION == 'droms'  || params.REQUESTED_ACTION == 'all'}
                     }
                     steps {
