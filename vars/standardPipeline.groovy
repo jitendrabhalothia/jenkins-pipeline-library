@@ -22,15 +22,15 @@ def call(body) {
     		}
 
     		stages {
-    			stage ('demo-preview-rabbitmq') {
+    			stage ('droms -qa05') {
     				when {
                 		// Only say hello if a "rabbitmq" is requested
-                		expression { params.REQUESTED_ACTION == 'rabbitmq'  || params.REQUESTED_ACTION == 'all'}
+                		expression { params.REQUESTED_ACTION == 'ceep'  || params.REQUESTED_ACTION == 'all'}
             		}
             		steps {
-                		echo 'Depoying demo-preview-rabbitmq'
+                		echo 'Depoying ceep for dev05'
                 
-                		sh "cd ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex/inventory/${config.projectName} ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
+                		sh "cd ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex/inventory/${config.projectName} ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex/droms.yml --tags update --vault-password-file  ~/.agv"
 
             		}
                 }
