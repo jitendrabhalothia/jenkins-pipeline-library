@@ -30,7 +30,7 @@ def call(body) {
             		steps {
                 		echo 'Depoying demo-preview-rabbitmq'
                 
-                		sh "cd ${PLAYBOOK_PATH} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/inventory/${config.projectName} ${PLAYBOOK_PATH}/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
+                		sh "cd ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex/inventory/${config.projectName} ~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
 
             		}
                 }
