@@ -4,14 +4,14 @@ def call(body) {
         def PLAYBOOK_PATH = "~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks"
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = config
-        body()
         parameters {
-                choice(
-                    // choices are a string of newline separated values
-                    choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
-                    description: '',
-                    name: 'REQUESTED_ACTION')
+            choice(
+                // choices are a string of newline separated values
+                choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
+                description: '',
+                name: 'REQUESTED_ACTION')
         }
+        body()
 
         pipeline {
             agent {
