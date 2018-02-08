@@ -1,7 +1,7 @@
 def call(body) {
 
         def config = [:]
-        def PLAYBOOK_PATH = "~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/"
+        def PLAYBOOK_PATH = "~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks"
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = config
         body()
