@@ -5,32 +5,35 @@ def call(body) {
         body.delegate = config
         body()
 
-        node {
-            // Clean workspace before doing anything
-            deleteDir()
+        pipeline {
+    		agent {
+        		label 'master'
+    		}
+    		environment {
+     		 PLAYBOOK_PATH = "~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks/flex"
+   			}
 
-            try {
+   			parameters {
+        		choice(
+            		// choices are a string of newline separated values
+            		choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
+            		description: '',
+            		name: 'REQUESTED_ACTION')
+    		}
+
+    		stages {
+    			stage ('demo-preview-rabbitmq') {
+    				when {
+                		// Only say hello if a "rabbitmq" is requested
+                		expression { params.REQUESTED_ACTION == 'rabbitmq'  || params.REQUESTED_ACTION == 'all'}
+            		}
+            		steps {
+                		echo 'Depoying demo-preview-rabbitmq'
                 
-                stage ('Build') {
-                    sh "echo 'building ${config.projectName} ...'"
+                		sh "cd ${PLAYBOOK_PATH} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/inventory/${config.projectName} ${PLAYBOOK_PATH}/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
+
+            		}
                 }
-                stage ('Tests') {
-                    parallel 'static': {
-                        sh "echo 'shell scripts to run static tests...'"
-                    },
-                    'unit': {
-                        sh "echo 'shell scripts to run unit tests...'"
-                    },
-                    'integration': {
-                        sh "echo 'shell scripts to run integration tests...'"
-                    }
-                }
-                stage ('Deploy') {
-                    sh "echo 'deploying to server ${config.serverDomain}...'"
-                }
-            } catch (err) {
-                currentBuild.result = 'FAILED'
-                throw err
-            }
+           	}
         }
     }
