@@ -15,7 +15,7 @@ def call(body) {
              parameters {
                 choice(
                     // choices are a string of newline separated values
-                    choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
+                    choices: 'rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
                     description: '',
                     name: 'REQUESTED_ACTION')
             }
@@ -27,7 +27,8 @@ def call(body) {
                         expression { params.REQUESTED_ACTION == 'rabbitmq'  || params.REQUESTED_ACTION == 'all'}
                     }
                     steps {
-                        echo 'Depoying rabbitmq for dev05'
+                        echo 'Depoying rabbitmq for dev05-rabbitmq'
+                        echo params.REQUESTED_ACTION
                 
                         sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
 
