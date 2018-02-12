@@ -27,7 +27,7 @@ def call(body) {
             }
 
             stages {
-                stage ('dev05-rabbitmq') {
+                stage ('dev05-rabbitmq'') {
                     when {
                         // Only say hello if a "rabbitmq" is requested
                         expression { params.REQUESTED_ACTION == 'rabbitmq'  || params.REQUESTED_ACTION == 'all'}
@@ -39,7 +39,7 @@ def call(body) {
 
                     }
                 }
-                stage ('dev05-redis') {
+                stage ('dev05-redis'') {
                     when {
                         // Only say hello if a "redis is requested
                         expression { params.REQUESTED_ACTION == 'redis'  || params.REQUESTED_ACTION == 'all'}
@@ -51,6 +51,7 @@ def call(body) {
 
                     }
                 }
+<<<<<<< HEAD
                 stage ('dev05-droms') {
                     when {
                         // Only say hello if a "droms" is requested
@@ -63,6 +64,8 @@ def call(body) {
 
                     }
                 }
+=======
+>>>>>>> parent of 365bc83... Adjusted for testting
 
 
             }
