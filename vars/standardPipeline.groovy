@@ -4,13 +4,7 @@ def call(body) {
         def PLAYBOOK_PATH = "~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks"
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = config
-        parameters {
-            choice(
-                // choices are a string of newline separated values
-                choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
-                description: '',
-                name: 'REQUESTED_ACTION')
-        }
+        
         body()
 
         pipeline {
@@ -27,7 +21,7 @@ def call(body) {
             }
 
             stages {
-                stage ('dev05-rabbitmq'') {
+                stage ('dev05-rabbitmq') {
                     when {
                         // Only say hello if a "rabbitmq" is requested
                         expression { params.REQUESTED_ACTION == 'rabbitmq'  || params.REQUESTED_ACTION == 'all'}
@@ -39,7 +33,7 @@ def call(body) {
 
                     }
                 }
-                stage ('dev05-redis'') {
+                stage ('dev05-redis') {
                     when {
                         // Only say hello if a "redis is requested
                         expression { params.REQUESTED_ACTION == 'redis'  || params.REQUESTED_ACTION == 'all'}
