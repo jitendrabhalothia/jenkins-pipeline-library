@@ -4,24 +4,33 @@ def call(body) {
         def PLAYBOOK_PATH = "~/workspace/JenkinsFile_GIT_Repo/ansible/playbooks"
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = config
+        parameters {
+            choice(
+                // choices are a string of newline separated values
+                choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
+                description: '',
+                name: 'REQUESTED_ACTION')
+        }
         body()
 
         pipeline {
             agent {
                 label 'master'
             }
-             
+            
+             parameters {
+                choice(
+                    // choices are a string of newline separated values
+                    choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall',
+                    description: '',
+                    name: 'REQUESTED_ACTION')
+            }
 
             stages {
                 stage ('dev05-rabbitmq') {
-                    script {
-                        env.REQUEST_ACTION_RMQ = input message: 'User input required', parameters: [choice(name: 'REQUESTED_ACTION', choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall', description: 'What is the release scope?')]
-
-                         
-                    }
                     when {
                         // Only say hello if a "rabbitmq" is requested
-                        expression { env.REQUEST_ACTION_RMQ == 'rabbitmq'  || env.REQUEST_ACTION_RMQ == 'all'}
+                        expression { params.REQUESTED_ACTION == 'rabbitmq'  || params.REQUESTED_ACTION == 'all'}
                     }
                     steps {
                         echo 'Depoying rabbitmq for dev05'
@@ -43,14 +52,9 @@ def call(body) {
                     }
                 }
                 stage ('dev05-droms') {
-                    script {
-                        env.REQUEST_ACTION_DRM = input message: 'User input required', parameters: [choice(name: 'REQUESTED_ACTION', choices: '\rabbitmq\nredis\ntusker\npheme\ndroms\nopenadr2b\nceep\nndianoga\ncascade\nrtcc\nfam-backend\nall', description: 'What is the release scope?')]
-
-                         
-                    }
                     when {
                         // Only say hello if a "droms" is requested
-                        expression { env.REQUEST_ACTION_DRM == 'droms'  || env.REQUEST_ACTION_DRM == 'all'}
+                        expression { params.REQUESTED_ACTION == 'droms'  || params.REQUESTED_ACTION == 'all'}
                     }
                     steps {
                         echo 'Depoying rabbitmq for dev05'
