@@ -42,7 +42,7 @@ def call(body) {
                     //}
                     steps {
                         script {
-                            if (params.REQUESTED_ACTION == 'rabbitmq'){
+                            if (params.REQUESTED_ACTION == 'redis'){
                                 echo 'Depoying redis for dev05'
                                 sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/redis.yml --tags update --vault-password-file  ~/.agv"
                             }
