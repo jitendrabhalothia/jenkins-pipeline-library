@@ -51,21 +51,7 @@ def call(body) {
 
                     }
                 }
-<<<<<<< HEAD
-                stage ('dev05-droms') {
-                    when {
-                        // Only say hello if a "droms" is requested
-                        expression { params.REQUESTED_ACTION == 'droms'  || params.REQUESTED_ACTION == 'all'}
-                    }
-                    steps {
-                        echo 'Depoying rabbitmq for dev05'
-                
-                        sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/droms.yml --tags update --vault-password-file  ~/.agv"
 
-                    }
-                }
-=======
->>>>>>> parent of 365bc83... Adjusted for testting
 
 
             }
