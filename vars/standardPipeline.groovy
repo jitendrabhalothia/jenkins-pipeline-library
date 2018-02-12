@@ -24,7 +24,7 @@ def call(body) {
                 stage ('dev05-rabbitmq') {
                     //when {
                         // Only say hello if a "rabbitmq" is requested
-                        expression { params.REQUESTED_ACTION == 'rabbitmq' || params.REQUESTED_ACTION == 'all'}
+                        //expression { params.REQUESTED_ACTION == 'rabbitmq' || params.REQUESTED_ACTION == 'all'}
                     //}
                     if (params.REQUESTED_ACTION == 'rabbitmq') {
                         steps {
