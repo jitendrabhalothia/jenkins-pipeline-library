@@ -28,7 +28,8 @@ def call(body) {
                     }
                     steps {
                         echo 'Depoying rabbitmq for dev05-rabbitmq'
-                        echo params.REQUESTED_ACTION
+                        echo params.REQUESTED_ACTION == 'rabbitmq'
+                        echo params.REQUESTED_ACTION == 'all'
                 
                         sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
 
