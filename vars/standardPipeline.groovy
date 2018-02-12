@@ -29,12 +29,9 @@ def call(body) {
                     steps {
                         script {
                             if (params.REQUESTED_ACTION == 'rabbitmq'){
-                                echo "rabbbitmq executed "
+                                echo 'Depoying rabbitmq for dev05-rabbitmq'
+                                sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
                             }
-                            echo 'Depoying rabbitmq for dev05-rabbitmq'
-                            echo params.REQUESTED_ACTION 
-                
-                            sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
                         }
                     }
                 }
@@ -44,10 +41,13 @@ def call(body) {
                         //expression { params.REQUESTED_ACTION == 'redis'  || params.REQUESTED_ACTION == 'all'}
                     //}
                     steps {
-                        echo 'Depoying rabbitmq for dev05'
-                
-                        sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/redis.yml --tags update --vault-password-file  ~/.agv"
-
+                        script {
+                            if (params.REQUESTED_ACTION == 'rabbitmq'){
+                                echo 'Depoying redis for dev05'
+                                sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/redis.yml --tags update --vault-password-file  ~/.agv"
+                            }
+                        }
+                        
                     }
                 }
 
