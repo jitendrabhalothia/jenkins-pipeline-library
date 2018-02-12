@@ -24,30 +24,30 @@ def call(body) {
                 stage ('dev05-rabbitmq') {
                     //when {
                         // Only say hello if a "rabbitmq" is requested
-                        //expression { params.REQUESTED_ACTION == 'rabbitmq' || params.REQUESTED_ACTION == 'all'}
+                       // expression { params.REQUESTED_ACTION == 'rabbitmq' || params.REQUESTED_ACTION == 'all'}
                     //}
-                    if (params.REQUESTED_ACTION == 'rabbitmq') {
-                        steps {
+                    steps {
+                        script {
+                            if (params.REQUESTED_ACTION == 'rabbitmq'){
+                                echo "rabbbitmq executed "
+                            }
                             echo 'Depoying rabbitmq for dev05-rabbitmq'
                             echo params.REQUESTED_ACTION 
                 
                             sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/rabbitmq.yml --tags update --vault-password-file  ~/.agv"
-
                         }
                     }
                 }
                 stage ('dev05-redis') {
-                    //hen {
+                    //when {
                         // Only say hello if a "redis is requested
-                      //  expression { params.REQUESTED_ACTION == 'redis'  || params.REQUESTED_ACTION == 'all'}
+                        //expression { params.REQUESTED_ACTION == 'redis'  || params.REQUESTED_ACTION == 'all'}
                     //}
-                    if (params.REQUESTED_ACTION == 'redis') {
-                        steps {
-                            echo 'Depoying rabbitmq for dev05'
+                    steps {
+                        echo 'Depoying rabbitmq for dev05'
                 
-                            sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/redis.yml --tags update --vault-password-file  ~/.agv"
+                        sh "cd ${PLAYBOOK_PATH}/${config.folderName} && cp ~/ansible.cfg ansible.cfg && sudo ansible-playbook -i ${PLAYBOOK_PATH}/${config.folderName}/inventory/${config.envName} ${PLAYBOOK_PATH}/${config.folderName}/redis.yml --tags update --vault-password-file  ~/.agv"
 
-                        }
                     }
                 }
 
